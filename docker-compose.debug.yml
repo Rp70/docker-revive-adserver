@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  docker-revive-adserver:
+    image: docker-revive-adserver
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
