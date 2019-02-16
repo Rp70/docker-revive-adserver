@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
+
 if [ "$1" = 'startup' ]; then
 	
 	if [ -e /docker-start-hook.sh ]; then
