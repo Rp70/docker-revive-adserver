@@ -23,5 +23,9 @@ RUN true \
     && chown -R www-data:www-data /var/www/html/ \
     && true
 
-#ENTRYPOINT ["bash"]
-CMD ["bash"]
+# copy custom scripts.
+COPY /docker-start.sh /
+RUN chmod +x /docker*.sh
+
+ENTRYPOINT ["/docker-start.sh"]
+CMD ["startup"]
