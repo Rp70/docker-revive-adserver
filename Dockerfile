@@ -10,7 +10,7 @@ WORKDIR /var/www/html
 ADD /files/revive-adserver-4.1.4.tar.gz /var/www/html/
 
 RUN true \
-    && ls -lah /var/www/html && 
+    && ls -lah /var/www/html \
     #&& curl -L https://download.revive-adserver.com/revive-adserver-$REVIVE_VERSION.tar.gz | tar -zx -C /var/www/html/ --strip-components=1 \
     && find /var/www/html/var -type d -exec chmod 700 {} + \
     && find /var/www/html/var -type f -exec chmod 600 {} + \
