@@ -24,9 +24,9 @@ RUN true \
     && rm -rf /tmp/revive-adserver.tar.gz \
     && true
 
-# copy custom scripts.
-COPY /docker-start.sh /
-RUN chmod +x /docker*.sh
-
-ENTRYPOINT ["/docker-start.sh"]
-CMD ["startup"]
+## copy custom scripts.
+#COPY /docker-start.sh /
+#RUN chmod +x /docker*.sh
+#
+#ENTRYPOINT ["/docker-start.sh"]
+#CMD ["startup"]
