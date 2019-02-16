@@ -17,5 +17,5 @@ RUN curl -L https://download.revive-adserver.com/revive-adserver-$REVIVE_VERSION
     && chown -R www-data:www-data /var/www/html/ \
     && true
 
-ENTRYPOINT ["/docker-start.sh"]
-CMD ["startup"]
+ENTRYPOINT ["bash"]
+#CMD ["startup"]
