@@ -23,7 +23,7 @@ RUN true && \
     #&& chown -R www-data:www-data /var/www/html/www/admin/plugins \
     chmod 700 /var/www/html/www/admin/plugins && \
     chown -R www-data:www-data /var/www/html/ && \
-    rm -rf /tmp/revive-adserver.tar.gz && \
+    rm -rf /tmp/revive-adserver-*.tar.gz && \
     ls -lah /var/www/html && \
     true
 
