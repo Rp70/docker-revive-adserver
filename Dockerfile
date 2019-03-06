@@ -7,7 +7,9 @@ ARG CRON_MAINTENANCE=""
 
 WORKDIR /var/www/html
 
-COPY /files/revive-adserver-4.1.4.tar.gz /tmp/revive-adserver.tar.gz
+# Copy files in /root into the image.
+COPY /files/ /
+#COPY /files/revive-adserver-4.1.4.tar.gz /tmp/revive-adserver.tar.gz
 
 RUN true && \
     tar -xzf /tmp/revive-adserver.tar.gz -C /var/www/html/ --strip-components=1 && \
