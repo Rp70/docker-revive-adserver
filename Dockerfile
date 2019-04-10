@@ -23,14 +23,11 @@ RUN set -ex && \
     # chmod 700 /var/www/html/plugins && \
     # #&& chown -R www-data:www-data /var/www/html/www/admin/plugins \
     # chmod 700 /var/www/html/www/admin/plugins && \
-    # chown -R www-data:www-data /var/www/html/ && \
+    chown -R www-data:www-data /var/www/html && \
     rm -rf /tmp/revive-adserver-*.tar.gz && \
     ls -lah /var/www/html && \
     true
 
-## copy custom scripts.
-#COPY /docker-start.sh /
-#RUN chmod +x /docker*.sh
-#
-#ENTRYPOINT ["/docker-start.sh"]
+
+#ENTRYPOINT ["/entrypoint.sh"]
 #CMD ["startup"]
