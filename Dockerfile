@@ -2,7 +2,7 @@ FROM phpfpm72-dev
 LABEL Name="Revive Adserver Docker Image" Version=0.0.1
 
 ARG REVIVE_VERSION=4.1.4
-ARG DOMAIN=domain.com
+#ARG DOMAIN=domain.com
 ARG CRON_MAINTENANCE=""
 
 WORKDIR /var/www/html
@@ -11,7 +11,7 @@ WORKDIR /var/www/html
 COPY /files/ /
 #COPY /files/revive-adserver-4.1.4.tar.gz /tmp/revive-adserver.tar.gz
 
-RUN true && \
+RUN set -ex && \
     tar -xzf /tmp/revive-adserver-*.tar.gz -C /var/www/html/ --strip-components=1 && \
     #&& curl -L https://download.revive-adserver.com/revive-adserver-$REVIVE_VERSION.tar.gz | tar -zx -C /var/www/html/ --strip-components=1 \
     # ls -lah /var/www/html && \
