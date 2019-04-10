@@ -12,6 +12,7 @@ COPY /files/ /
 #COPY /files/revive-adserver-4.1.4.tar.gz /tmp/revive-adserver.tar.gz
 
 RUN set -ex && \
+    chmod +x /entrypoint*.sh && \
     tar -xzf /tmp/revive-adserver-*.tar.gz -C /var/www/html/ --strip-components=1 && \
     #&& curl -L https://download.revive-adserver.com/revive-adserver-$REVIVE_VERSION.tar.gz | tar -zx -C /var/www/html/ --strip-components=1 \
     # ls -lah /var/www/html && \
