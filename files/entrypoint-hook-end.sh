@@ -13,7 +13,7 @@ fi
 # Setting maintenance script run by crond
 if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
     echo "#!/bin/sh" > /etc/cron.hourly/revive-adserver
-    echo "php /var/www/html/maintenance/maintenance.php $SERVER_NAME" >> /etc/cron.hourly/revive-adserver
+    echo "sudo -u www-data php /var/www/html/maintenance/maintenance.php $SERVER_NAME" >> /etc/cron.hourly/revive-adserver
     chmod +x /etc/cron.hourly/revive-adserver
 fi
 
