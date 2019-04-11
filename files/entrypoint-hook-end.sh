@@ -7,6 +7,7 @@ ln -s /etc/nginx/sites-available/revive-adserver.conf /etc/nginx/sites-enabled/
 
 # Disable backups
 touch /var/www/html/var/NOBACKUPS
+touch /var/www/html/var/INSTALLED
 
 # Setting permissions
 find /var/www/html/var -type d -exec chmod 700 {} + && \
