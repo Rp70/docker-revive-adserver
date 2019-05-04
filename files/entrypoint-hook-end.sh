@@ -36,3 +36,7 @@ if [ "$REVIVE_SECURE" = '1' ]; then
         chmod -c 0444 /var/www/html/var/$SERVER_NAME.conf.php;
     fi
 fi
+
+
+# Re-create UPGRADE in case /var/www/html/var re-mount
+touch /var/www/html/var/UPGRADE
