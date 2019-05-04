@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -o pipefail
 
 # Setting some customs
 sed -i "s/\bserver_name revive-adserver\;/server_name $SERVER_NAME;/g" /etc/nginx/sites-available/revive-adserver.conf
@@ -18,11 +19,11 @@ if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
 fi
 
 # Setting permissions
-find /var/www/html/var -type d -exec chmod 700 {} + && \
-find /var/www/html/var -type f -exec chmod 600 {} + && \
-chmod 700 /var/www/html/plugins && \
-chmod 700 /var/www/html/www/admin/plugins && \
-chown -R www-data:www-data /var/www/html
+find /var/www/html/var -type d -exec chmod 700 {} + | true && \
+find /var/www/html/var -type f -exec chmod 600 {} + | true && \
+chmod 700 /var/www/html/plugins | true && \
+chmod 700 /var/www/html/www/admin/plugins | true && \
+chown -R www-data:www-data /var/www/html | true
 
 # Clean up current cache if any
 rm -rdf /var/www/html/var/templates_compiled/** /var/www/html/var/cache/**;
