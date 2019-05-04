@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-set -o pipefail
+#set -o pipefail
 
 # Setting some customs
 sed -i "s/\bserver_name revive-adserver\;/server_name $SERVER_NAME;/g" /etc/nginx/sites-available/revive-adserver.conf
