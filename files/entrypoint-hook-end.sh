@@ -18,7 +18,7 @@ if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
     chmod +x /etc/cron.hourly/revive-adserver;
 fi
 
-# Setting permissions
+# Setting permissions or installation/upgrade process will report permissions error
 find /var/www/html/var -type d -exec chmod 700 {} + | true && \
 find /var/www/html/var -type f -exec chmod 600 {} + | true && \
 chmod 700 /var/www/html/plugins | true && \
