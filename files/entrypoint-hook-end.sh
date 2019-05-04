@@ -19,7 +19,7 @@ if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
 fi
 
 # Setting permissions
-find /var/www/html/var -type d -exec chmod 700 {} + | true && \
+find /var/www/html/var -type d -exec chmod 755 {} + | true && \
 find /var/www/html/var -type f -exec chmod 600 {} + | true && \
 chmod 700 /var/www/html/plugins | true && \
 chmod 700 /var/www/html/www/admin/plugins | true && \
