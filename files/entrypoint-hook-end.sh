@@ -38,5 +38,6 @@ if [ "$REVIVE_SECURE" = '1' ]; then
 fi
 
 
+# NEVER enable this or index.php will keep redirecting to install.php
 # Re-create UPGRADE in case /var/www/html/var re-mount
-touch /var/www/html/var/UPGRADE
+#touch /var/www/html/var/UPGRADE
