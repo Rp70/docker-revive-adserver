@@ -1,15 +1,11 @@
-FROM phpfpm72-dev
+FROM phpfpm72
 LABEL Name="Revive Adserver Docker Image" Version=0.0.1
 
 ARG REVIVE_VERSION=4.1.4
-#ARG DOMAIN=domain.com
-ARG CRON_MAINTENANCE=""
 
 WORKDIR /var/www/html
 
-# Copy files in /root into the image.
 COPY /files/ /
-#COPY /files/revive-adserver-4.1.4.tar.gz /tmp/revive-adserver.tar.gz
 
 RUN set -ex && \
     chmod +x /entrypoint*.sh && \
