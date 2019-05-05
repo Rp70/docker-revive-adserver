@@ -23,6 +23,7 @@ find /var/www/html/var -type d -exec chmod 700 {} + | true && \
 find /var/www/html/var -type f -exec chmod 600 {} + | true && \
 chmod 700 /var/www/html/plugins | true && \
 chmod 700 /var/www/html/www/admin/plugins | true && \
+chmod 711 /var/www/html/var | true && \
 chown -R www-data:www-data /var/www/html | true
 
 # Clean up current cache if any
