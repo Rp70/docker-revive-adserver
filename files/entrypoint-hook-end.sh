@@ -28,16 +28,17 @@ chown -R www-data:www-data /var/www/html | true
 # Clean up current cache if any
 rm -rdf /var/www/html/var/templates_compiled/** /var/www/html/var/cache/**;
 
-if [ "$REVIVE_SECURE" = '1' ]; then
+if [ "$REVIVE_INSTALLED" = '1' ]; then
     if [ -e /var/www/html/var/INSTALLED ]; then
         rm -rf /var/www/html/www/admin/install.php \
                 /var/www/html/www/admin/install-plugin.php \
                 /var/www/html/www/admin/install-runtask.php;
         chmod -c 0444 /var/www/html/var/$SERVER_NAME.conf.php;
     fi
+else
+    # NEVER enable this or index.php will keep redirecting to install.php
+    # Re-create UPGRADE in case /var/www/html/var re-mount
+    touch /var/www/html/var/UPGRADE
 fi
 
 
-# NEVER enable this or index.php will keep redirecting to install.php
-# Re-create UPGRADE in case /var/www/html/var re-mount
-#touch /var/www/html/var/UPGRADE
