@@ -1,7 +1,7 @@
 FROM phpfpm72
 LABEL Name="Revive Adserver Docker Image" Version=0.0.1
 
-ARG REVIVE_VERSION=4.2.0
+ARG REVIVE_VERSION=4.2.1
 
 WORKDIR /var/www/html
 
