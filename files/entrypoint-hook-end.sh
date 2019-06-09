@@ -4,7 +4,7 @@ set -e
 
 # Setting some customs
 sed -i "s/\bserver_name revive-adserver\;/server_name $SERVER_NAME;/g" /etc/nginx/sites-available/revive-adserver.conf
-ln -s /etc/nginx/sites-available/revive-adserver.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/revive-adserver.conf /etc/nginx/sites-enabled/revive-adserver.conf
 
 # Disable backups if required
 if [ "$REVIVE_NOBACKUPS" = '1' ]; then
@@ -34,7 +34,7 @@ if [ "$REVIVE_INSTALLED" = '1' ]; then
         rm -rf /var/www/html/www/admin/install.php \
                 /var/www/html/www/admin/install-plugin.php \
                 /var/www/html/www/admin/install-runtask.php;
-        chmod -c 0444 /var/www/html/var/$SERVER_NAME.conf.php;
+        chmod -c 0444 /var/www/html/var/$SERVER_NAME.conf.php | true;
     fi
 else
     # NEVER enable this or index.php will keep redirecting to install.php
