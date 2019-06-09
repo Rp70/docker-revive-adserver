@@ -11,19 +11,13 @@ if [ "$REVIVE_NOBACKUPS" = '1' ]; then
     touch /var/www/html/var/NOBACKUPS
 fi
 
-# Setting maintenance script run by crond
-if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
-    echo "#!/bin/sh" > /etc/cron.hourly/revive-adserver;
-    echo "sudo -u www-data php -d memory_limit=500M /var/www/html/maintenance/maintenance.php $SERVER_NAME" >> /etc/cron.hourly/revive-adserver;
-    chmod +x /etc/cron.hourly/revive-adserver;
-fi
 
 # Setting permissions or installation/upgrade process will report permissions error
 find /var/www/html/var -type d -exec chmod 700 {} + | true && \
 find /var/www/html/var -type f -exec chmod 600 {} + | true && \
 chmod 700 /var/www/html/plugins | true && \
 chmod 700 /var/www/html/www/admin/plugins | true && \
-chmod 711 /var/www/html/var | true && \
+chmod -R a+w /var/www/html/var | true && \
 chown -R www-data:www-data /var/www/html | true
 
 # Clean up current cache if any
@@ -35,6 +29,13 @@ if [ "$REVIVE_INSTALLED" = '1' ]; then
                 /var/www/html/www/admin/install-plugin.php \
                 /var/www/html/www/admin/install-runtask.php;
         chmod -c 0444 /var/www/html/var/$SERVER_NAME.conf.php | true;
+    fi
+
+    # Setting maintenance script run by crond
+    if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
+        echo "#!/bin/sh" > /etc/cron.hourly/revive-adserver;
+        echo "sudo -u www-data php -d memory_limit=500M /var/www/html/maintenance/maintenance.php $SERVER_NAME" >> /etc/cron.hourly/revive-adserver;
+        chmod +x /etc/cron.hourly/revive-adserver;
     fi
 else
     # NEVER enable this or index.php will keep redirecting to install.php
