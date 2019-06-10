@@ -34,7 +34,7 @@ if [ "$REVIVE_INSTALLED" = '1' ]; then
     # Setting maintenance script run by crond
     if [ "$REVIVE_MAINTENANCE" = 'cron' ]; then
         echo "#!/bin/sh" > /etc/cron.hourly/revive-adserver;
-        echo "sudo -u www-data php -d memory_limit=500M /var/www/html/maintenance/maintenance.php $SERVER_NAME" >> /etc/cron.hourly/revive-adserver;
+        echo "gosu www-data php -d memory_limit=500M /var/www/html/maintenance/maintenance.php $SERVER_NAME" >> /etc/cron.hourly/revive-adserver;
         chmod +x /etc/cron.hourly/revive-adserver;
     fi
 else
