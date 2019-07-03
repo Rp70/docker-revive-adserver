@@ -4,7 +4,7 @@ set -e
 
 # Setting some customs
 sed -i "s/\bserver_name revive-adserver\;/server_name $SERVER_NAME;/g" /etc/nginx/sites-available/revive-adserver.conf
-ln -s /etc/nginx/sites-available/revive-adserver.conf /etc/nginx/sites-enabled/revive-adserver.conf
+ln -sf /etc/nginx/sites-available/revive-adserver.conf /etc/nginx/sites-enabled/revive-adserver.conf
 
 # Disable backups if required
 if [ "$REVIVE_NOBACKUPS" = '1' ]; then
