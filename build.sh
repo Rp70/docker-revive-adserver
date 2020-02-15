@@ -6,6 +6,6 @@ set -e
 for version in "${!versions[@]}"; do
     tag=`date +%F`
     #time docker pull php:$version-fpm
-    time docker build --tag revive-adserver-$version:$tag versions/$version | tee tmp/revive-adserver-$version.log
+    time docker build --pull --tag revive-adserver-$version:$tag versions/$version | tee tmp/revive-adserver-$version.log
     time docker tag revive-adserver-$version:$tag revive-adserver-$version:latest
 done
