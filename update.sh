@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# THIS IS FOR DEVELOPMENT ONLY.
+
+
 set -e
 
 . versions.sh

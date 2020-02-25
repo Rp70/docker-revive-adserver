@@ -1,15 +1,66 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -e
 #set -o pipefail
+
+
+if [ "$NGINX_ENABLE" = '0' ]; then
+	rm -f /etc/supervisor/conf.d/nginx.conf
+else
+	SUPERVISOR_ENABLE=$((SUPERVISOR_ENABLE+1))
+	ENVIRONMENT_REPLACE="$ENVIRONMENT_REPLACE /etc/nginx"
+	
+	#rm -rf /etc/nginx/sites-available/default
+	#sed -i 's/^user/daemon off;\nuser/g' /etc/nginx/nginx.conf
+	#sed -i 's/^user www-data;/user coin;/g' /etc/nginx/nginx.conf
+	sed -i "s/^worker_processes auto;/worker_processes $NGINX_PROCESSES;/g" /etc/nginx/nginx.conf
+	#sed -i 's/\baccess_log[^;]*;/access_log \/dev\/stdout;/g' /etc/nginx/nginx.conf
+	#sed -i 's/\berror_log[^;]*;/error_log \/dev\/stdout;/g' /etc/nginx/nginx.conf
+
+	rm -rf /etc/nginx/modules-enabled/*.conf
+	
+	### realip_module ###
+	# Cloudflare IPv4: https://www.cloudflare.com/ips-v4
+	# Cloudflare IPv6: https://www.cloudflare.com/ips-v6
+	CONFFILE=/etc/nginx/conf.d/realip.conf
+	IPADDRS=""
+	for ipaddr in $NGINX_REALIP_FROM; do
+		if [ "$ipaddr" = "cloudflare" ]; then
+			IPADDRS="$IPADDRS `curl -L -f --connect-timeout 30 https://www.cloudflare.com/ips-v4 2> /dev/null`"
+			if [ $? -gt 0 ]; then
+				IPADDRS="$IPADDRS `cat /tmp/cloudflare-ips-v4 2> /dev/null`"
+			fi
+			sleep 1
+
+			IPADDRS="$IPADDRS `curl -L -f --connect-timeout 30 https://www.cloudflare.com/ips-v6 2> /dev/null`"
+			if [ $? -gt 0 ]; then
+				IPADDRS="$IPADDRS `cat /tmp/cloudflare-ips-v6 2> /dev/null`"
+			fi
+
+			NGINX_REALIP_HEADER='CF-Connecting-IP'
+		else
+			# Try to get IP if it's a hostname
+			for ipaddr2 in `getent hosts $ipaddr | awk '{print $1}'`; do
+				IPADDRS="$IPADDRS $ipaddr2"
+			done
+		fi
+	done
+
+	if [ "$IPADDRS" != '' ]; then
+		echo "### This file is auto-generated. ###" > $CONFFILE
+		echo "### Your changes will be overwriten. ###" >> $CONFFILE
+		echo >> $CONFFILE
+		for ipaddr in $IPADDRS; do
+			echo "set_real_ip_from $ipaddr;" >> $CONFFILE
+		done
+		echo "real_ip_header $NGINX_REALIP_HEADER;" >> $CONFFILE
+	fi
+	### / realip_module ###
+fi
+
 
 # Setting some customs
 sed -i "s/\bserver_name revive-adserver\;/server_name $SERVER_NAME;/g" /etc/nginx/sites-available/revive-adserver.conf
 ln -sf /etc/nginx/sites-available/revive-adserver.conf /etc/nginx/sites-enabled/revive-adserver.conf
-
-# Disable backups if required
-if [ "$REVIVE_NOBACKUPS" = '1' ]; then
-    touch /var/www/html/var/NOBACKUPS
-fi
 
 
 # Setting permissions or installation/upgrade process will report permissions error
@@ -20,7 +71,7 @@ chmod 700 /var/www/html/www/admin/plugins | true && \
 chmod -R a+w /var/www/html/var | true && \
 chown -R www-data:www-data /var/www/html | true
 
-# Clean up current cache if any
+# Clean up current cache if any in case of mounting from host.
 rm -rdf /var/www/html/var/templates_compiled/** /var/www/html/var/cache/**;
 
 if [ "$REVIVE_INSTALLED" = '1' ]; then
@@ -38,9 +89,12 @@ if [ "$REVIVE_INSTALLED" = '1' ]; then
         chmod +x /etc/cron.hourly/revive-adserver;
     fi
 else
-    # NEVER enable this or index.php will keep redirecting to install.php
-    # Re-create UPGRADE in case /var/www/html/var re-mount
+    # Re-create UPGRADE in case /var/www/html/var re-mounted.
     touch /var/www/html/var/UPGRADE
 fi
 
+# Disable backups if required
+if [ "$REVIVE_NOBACKUPS" = '1' ]; then
+    touch /var/www/html/var/NOBACKUPS
+fi
 

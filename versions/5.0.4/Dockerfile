@@ -22,7 +22,8 @@ RUN set -ex && \
     curl -L https://download.revive-adserver.com/revive-adserver-$REVIVE_VERSION.tar.gz | tar -xz -C /var/www/html/ --strip-components=1 && \
     chown -R www-data:www-data /var/www/html && \
     rm -rf /tmp/revive-adserver-*.tar.gz && \
-    ls -lah /var/www/html
+    ls -lah /var/www/html && \
+    apt-clean
 
 
 #ENTRYPOINT ["/entrypoint.sh"]
