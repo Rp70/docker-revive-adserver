@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+if [ "$SERVER_NAME" = '' ]; then
+    echo '$SERVER_NAME is not defined!';
+    exit 1;
+fi
+
 # Defaults if not specified from container's config.
 CRON_ENABLE=${CRON_ENABLE:='1'}
 CRON_COMMANDS=${CRON_COMMANDS:=''}

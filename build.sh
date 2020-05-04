@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # THIS IS FOR DEVELOPMENT ONLY.
 
 set -ex
