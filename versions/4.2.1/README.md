@@ -10,5 +10,6 @@ Revive Adserver Docker Image with the following features:
 Stable and works on production, but less document. I'll provide document and instructions when I get a chance. Please feel free to submit PRs.
 
 # TODO
+- [ ] Cloudflare IPs auto update.
 - [ ] GeoIP auto update.
-
+- [ ] Test cases.
